@@ -33,14 +33,25 @@ public class UserServiceIntegrationTest {
 
     @Test
     void shouldReturnAllUsers() {
+        List<User> allUsers = userService.getAllUsers();
+
+        assertEquals(2, allUsers.size());
+        assertEquals("Adam", allUsers.get(0).getName());
+        assertThat(allUsers.get(1).getName(), is(not(emptyOrNullString())));
     }
 
     @Test
     void shouldReturnUser() {
+        ResponseEntity<User> user = userService.getUser(10L);
+
+        assertEquals(HttpStatus.OK, user.getStatusCode());
+        assertEquals("Adam", user.getBody().getName());
     }
 
     @Test
     void shouldReturnNoContent() {
+        ResponseEntity<User> user = userService.getUser(100L);
+        assertEquals(HttpStatus.NO_CONTENT, user.getStatusCode());
     }
 
 }
