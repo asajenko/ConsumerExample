@@ -15,25 +15,4 @@ import java.util.List;
 public class UserService {
 
     int port = 8081;
-
-    public List<User> getAllUsers() {
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
-        RestTemplate rest = new RestTemplate();
-        rest.setMessageConverters(Collections.singletonList(converter));
-        ResponseEntity<User[]> exchange = rest.getForEntity(
-                "http://localhost:" + port + "/users",
-                User[].class);
-        return Arrays.asList(exchange.getBody());
-    }
-
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
-        MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        converter.setSupportedMediaTypes(Collections.singletonList(MediaType.ALL));
-        RestTemplate rest = new RestTemplate();
-        rest.setMessageConverters(Collections.singletonList(converter));
-        return rest.getForEntity(
-                "http://localhost:" + port + "/users/" + id,
-                User.class);
-    }
 }
